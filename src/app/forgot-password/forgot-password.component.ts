@@ -63,7 +63,7 @@ resetPassword(){
     next : (data) => {
       this.isCodeSent = true;
       this.isCodeValid = true;
-      this.isSuccessful - true;
+      this.isSuccessful = true;
       this.message = "Your Password has been changed succusfully, please login again"
   },
   error : (err) => {

@@ -1,0 +1,63 @@
+
+    <div class="row mt-4">
+      <div class="col-lg-4 col-sm-2 col-2"></div>
+      <div class="col-lg-4 col-sm-8 col-8">
+
+    <div class="form-outline mb-4">
+      <div class="text-center mb-4"><h2>Logo</h2></div>
+      <input type="text" 
+      id="form2Example1" 
+      class="form-control" 
+      [(ngModel)]="login.username"
+       [required]=true
+       name="username"/>
+      <label class="form-label" for="form2Example1">Email address</label>
+    </div>
+  
+    <div class="form-outline mb-4">
+      <input type="password" 
+      id="form2Example2" 
+      class="form-control" 
+      [(ngModel)]="login.password" 
+      [required]=true
+      name="password"/>
+      <label class="form-label" for="form2Example2">Password</label>
+    </div>
+  
+    <div class="row mb-4">
+      <div class="col d-flex justify-content-center">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+          <label class="form-check-label" for="form2Example31"> Remember me </label>
+        </div>
+      </div>
+  
+      <div class="col">
+        <a [routerLink]="['/forgot-password']">Forgot password?</a>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary btn-block mb-4" (click)="onSubmit()">Sign in</button>
+  
+    <!-- Register buttons -->
+    <div class="text-center">
+      <p>Not a member? <a [routerLink]="['/register']">Register</a></p>
+      <p>or sign up with:</p>
+      <button type="button" class="btn btn-link btn-floating mx-1">
+        <i class="bi bi-google"></i>
+      </button>
+  
+      <button type="button" class="btn btn-link btn-floating mx-1">
+        <i class="bi bi-facebook"></i>
+      </button>
+  
+      <button type="button" class="btn btn-link btn-floating mx-1">
+        <i class="bi bi-twitter"></i>
+      </button>
+  
+      <button type="button" class="btn btn-link btn-floating mx-1">
+        <i class="bi bi-github"></i>
+      </button>
+    </div>
+  </div>
+  <div class="col-4 col-sm-4 col-lg-2 col-2"></div>
+  </div>

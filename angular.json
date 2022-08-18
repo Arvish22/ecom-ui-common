@@ -74,6 +74,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig":"./proxy.conf.js"
+          },
           "configurations": {
             "production": {
               "browserTarget": "ecom-ui-common:build:production"
@@ -88,6 +91,7 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "ecom-ui-common:build"
+            //"proxyConfig":"./src/proxy.conf.json"
           }
         },
         "test": {

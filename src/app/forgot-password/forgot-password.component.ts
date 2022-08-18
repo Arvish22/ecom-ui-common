@@ -29,8 +29,8 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   getResetToken(){
-      const user  = new User({username : this.username})
-      this.authService.forgotPassword(user).subscribe({
+
+      this.authService.forgotPassword({username : this.username}).subscribe({
         next : (data) => {
           this.message = "We have sent a reset code to your email. Please check.";
           this.isCodeSent = true;

@@ -6,7 +6,7 @@
   <label class="form-label" for="form2Example1" *ngIf="isSuccessful">
     Registeration successful, <a class="text-primary" [routerLink]="['/login']">please login to continue</a>
   </label>
-  <div>
+  <div *ngIf="!isSuccessful">
   <div class="form-outline mb-4">
     <div class="text-center mb-4"><h2>Logo</h2></div>
     <input type="text" 
@@ -49,7 +49,7 @@
   </div>
 
   
-  <button type="button" class="btn btn-primary btn-block mb-4" (click)="onSubmit()">Sign in</button>
+  <button type="button" class="btn btn-primary btn-block mb-4" (click)="onSubmit()">Register</button>
 
   <!-- Register buttons -->
   <div class="text-center">

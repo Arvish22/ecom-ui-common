@@ -3,6 +3,7 @@ import { Route, Router } from '@angular/router';
 import { JwtResponse } from '../auth/models/jwt-response';
 import { AuthService } from '../auth/services/auth.service';
 import { TokenStorageService } from '../auth/services/token-storage.service';
+import { UserService } from '../auth/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -21,11 +22,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService, 
     private tokenStorage: TokenStorageService,
-    private router : Router) { }
+    private router : Router,
+    private userService : UserService) { }
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken() && this.tokenStorage.getToken() != '') {
       this.isLoggedIn = true;
+      this.router.navigate(['/home']);
       //this.roles = this.tokenStorage.getUser().roles;
     }
   }
@@ -35,9 +38,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(username, password).subscribe({
       next : (data : JwtResponse) => {
       this.tokenStorage.saveToken(data.token?data.token : '');
+      this.userService.saveUsername(username);
       this.isLoginFailed = false;
       this.isLoggedIn = true;
-      this.router.navigate(['/profile']);
+      this.reloadPage();
     },
     error : (err) => {
       this.errorMessage = err.error.message;
@@ -45,6 +49,7 @@ export class LoginComponent implements OnInit {
     }
   });
   }
+    
   reloadPage(): void {
     window.location.reload();
   }

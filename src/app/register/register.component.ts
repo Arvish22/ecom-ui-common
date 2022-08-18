@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(): void {
     if(this.register.password == this.register.confirmPassword){
-    const user = new User(this.register);
+    const user : User = this.register;
     user.roles = [Role.Admin,Role.User];
     user.username = this.register.email;
     this.authService.register(user).subscribe({

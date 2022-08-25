@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user';
-// const API_URL = 'http://radiant-headland-28157.herokuapp.com/api/user';
-const API_URL = '/api/user/'//'http://localhost:8080/api/user/';
+const API_URL = 'http://radiant-headland-28157.herokuapp.com/api/user';
+// const API_URL = '/api/user/'//'http://localhost:8080/api/user/';
 const USERNAME = 'USERNAME';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

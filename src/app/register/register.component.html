@@ -1,56 +1,76 @@
 <div class="row mt-4">
     <div class="col-lg-4 col-sm-2 col-2"></div>
     <div class="col-lg-4 col-sm-8 col-8">
-        
-  <label class="form-label" for="form2Example1">{{errorMessage}}</label>
-  <label class="form-label" for="form2Example1" *ngIf="isSuccessful">
+      <div class="text-center mb-4"><h2>Logo</h2></div>
+  <label class="form-label" *ngIf="isSuccessful">
     Registeration successful, <a class="text-primary" [routerLink]="['/login']">please login to continue</a>
   </label>
+
   <div *ngIf="!isSuccessful">
+    <div class="text-danger text-center" *ngIf="isSignUpFailed">
+      {{errorMessage}}
+    </div>
+    <form [formGroup]="register" (ngSubmit)="onSubmit(register.value)">
   <div class="form-outline mb-4">
-    <div class="text-center mb-4"><h2>Logo</h2></div>
+    <label class="form-label" for="email">Email</label>
+    <input type="email" 
+    id="username" 
+    class="form-control" 
+    formControlName="username"
+     name="username"
+     email="true"
+     required/>
+     <div *ngIf="username.invalid && (username.dirty || username.touched)">
+      <div class="text-danger" *ngIf="username.errors?.['email']">
+        Email is invalid
+      </div>
+      <div class="text-danger" *ngIf="username.errors?.['required']">
+        Email is required.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-outline mb-4">
+    <label class="form-label" for="phone">Phone</label>
     <input type="text" 
-    id="form2Example1" 
+    id="phone" 
     class="form-control" 
-    [(ngModel)]="register.email"
-     [required]=true
-     name="username"/>
-    <label class="form-label" for="form2Example1">Email address</label>
+    formControlName="phone" 
+    name="phone"
+    required/>
+    <div *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+      <div class="text-danger" *ngIf="phone.errors?.['required']">
+        Phone number is required.
+      </div>
+      <div class="text-danger" *ngIf="phone.errors?.['pattern']">
+        Phone number should contain digits of length
+      </div>
+    </div>
   </div>
 
   <div class="form-outline mb-4">
-    <input type="number" 
-    id="form2Example2" 
-    class="form-control" 
-    [(ngModel)]="register.phone" 
-    [required]=true
-    name="password"/>
-    <label class="form-label" for="form2Example2">Phone</label>
-  </div>
-
-  <div class="form-outline mb-4">
+    <label class="form-label" for="password">Password</label>
     <input type="password" 
-    id="form2Example2" 
+    id="password" 
     class="form-control" 
-    [(ngModel)]="register.password" 
-    [required]=true
-    name="password"/>
-    <label class="form-label" for="form2Example2">Password</label>
+    formControlName="password"
+    name="password"
+    required/>
+    <div *ngIf="password.invalid && (password.dirty || password.touched)">
+      <div class="text-danger" *ngIf="password.errors?.['required']">
+        Password is required.
+      </div>
+      <div class="text-danger" *ngIf="password.errors?.['pattern']">
+       Password should be Minimum eight characters, 
+       at least one uppercase letter, 
+       one lowercase letter, 
+       one number and one special character
+      </div>
+    </div>
   </div>
-
-  <div class="form-outline mb-4">
-    <input type="password" 
-    id="form2Example2" 
-    class="form-control" 
-    [(ngModel)]="register.confirmPassword" 
-    [required]=true
-    name="password"/>
-    <label class="form-label" for="form2Example2">Confirm Password</label>
-  </div>
-
   
-  <button type="button" class="btn btn-primary btn-block mb-4" (click)="onSubmit()">Register</button>
-
+  <button type="submit" class="btn btn-primary btn-block mb-4">Register</button>
+</form>
   <!-- Register buttons -->
   <div class="text-center">
     <p>Already a member? <a [routerLink]="['/login']">sign in</a></p>

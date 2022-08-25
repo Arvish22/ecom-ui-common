@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-8 col-lg-6">
+
+            <div>
+                <div class="form-outline mb-4">
+                <div class="text-center mb-4"><h2>Add Category</h2></div>
+                    <input type="text"  
+                    class="form-control" 
+                    [(ngModel)]="category.name"
+                     [required]=true
+                     name="username"/>
+                    <label class="form-label">Name</label>
+                  </div>
+
+                <div class="text-center mb-4"><h2>Add Sub Category</h2></div>
+                  <input type="text"  
+                  class="form-control" 
+                  [(ngModel)]="subCategory.name"
+                   [required]=true
+                   name="username"/>
+                </div>
+
+                <button class="btn btn-danger" (click)="add()">Add</button>
+                <button class="btn btn-danger" (click)="save()">save</button>
+
+    </div>
+    <div class="col-4 col-lg-6">
+        <div class="text-center mb-4"><h2>Add Category</h2></div>
+                   <div *ngFor="let categor of category.categories">
+                        {{categor.name}}
+                   </div>
+</div>

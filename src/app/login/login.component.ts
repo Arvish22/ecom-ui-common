@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { JwtResponse } from '../auth/models/jwt-response';
 import { AuthService } from '../auth/services/auth.service';
@@ -11,21 +12,28 @@ import { UserService } from '../auth/services/user.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  login: any = {
-    username: null,
-    password: null
-  };
+
+  login: any;
+
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private tokenStorage: TokenStorageService,
-    private router : Router,
-    private userService : UserService) { }
+    private router: Router,
+    private userService: UserService) { }
 
   ngOnInit(): void {
+
+    this.login = new FormGroup({
+      username: new FormControl("", Validators.compose([
+        Validators.email
+      ])),
+      password: new FormControl("")
+    });
+
     if (this.tokenStorage.getToken() && this.tokenStorage.getToken() != '') {
       this.isLoggedIn = true;
       this.router.navigate(['/home']);
@@ -33,24 +41,35 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
-    const { username, password } = this.login;
-    this.authService.login(username, password).subscribe({
-      next : (data : JwtResponse) => {
-      this.tokenStorage.saveToken(data.token?data.token : '');
-      this.userService.saveUsername(username);
-      this.isLoginFailed = false;
-      this.isLoggedIn = true;
-      this.reloadPage();
-    },
-    error : (err) => {
-      this.errorMessage = err.error.message;
-      this.isLoginFailed = true;
+  onSubmit(val: any): void {
+
+    if (this.login.valid) {
+      this.authService.login(val.username, val.password).subscribe({
+        next: (data: JwtResponse) => {
+          this.tokenStorage.saveToken(data.token ? data.token : '');
+          this.userService.saveUsername(val.username);
+          this.isLoginFailed = false;
+          this.isLoggedIn = true;
+          this.reloadPage();
+        },
+        error: (err) => {
+          this.errorMessage = err.error.message;
+          this.isLoginFailed = true;
+        }
+      });
     }
-  });
+    else {
+      this.login.get('username').touched = true;
+      this.login.get('password').touched = true;
+      this.login.get('username').touched = true;
+    }
   }
-    
+
   reloadPage(): void {
     window.location.reload();
   }
+
+  get username() { return this.login.get('username'); }
+
+  get password() { return this.login.get('password'); }
 }

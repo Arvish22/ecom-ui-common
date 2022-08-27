@@ -4,16 +4,18 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { JwtResponse } from '../models/jwt-response';
-const AUTH_API = 'https://radiant-headland-28157.herokuapp.com/api/';
-// const AUTH_API = 'http://localhost:8080/api/';
+// const AUTH_API = 'https://radiant-headland-28157.herokuapp.com/api/';
+const AUTH_API = '/api/'; //'http://localhost:8080/api/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+const USER_KEY = "user";
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  
+
     constructor(
         private router: Router,
         private http: HttpClient
@@ -25,10 +27,6 @@ export class AuthService {
       username,
       password
     }, httpOptions);
-  }
-
-  setUserToAppLevel(): Observable<any> {
-    return this.http.get<User>(AUTH_API + 'findOne/lucky',httpOptions);
   }
 
   register(user : User): Observable<any> {
@@ -46,10 +44,4 @@ export class AuthService {
   resetPassword(reset : any): Observable<any> {
     return this.http.post(AUTH_API + 'reset_password', reset, httpOptions);
   }
-  
-  logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('user');
-    this.router.navigate(['/login']);
-}
 }

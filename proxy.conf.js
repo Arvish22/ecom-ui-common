@@ -1,6 +1,7 @@
 const PROXY_CONFIG = {
     "/api/*": {
       "target":"http://localhost:8080",
+      // "target":"http://radiant-headland-28157.herokuapp.com",
       "pathRewrite": {
         "^/api": "/api"
       },

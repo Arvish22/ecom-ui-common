@@ -9,50 +9,56 @@ import { UserService } from './auth/services/user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnChanges{
+export class AppComponent implements OnInit, OnChanges {
   title = 'ecom-ui-common';
   private roles: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
-  username : string | null = '';
+  username: string | null = '';
   constructor(private tokenStorageService: TokenStorageService,
-    private userService : UserService,
-    private authService : AuthService) { 
-      
-      this.userService.userSubject.subscribe({
-        next : (data : User | null) =>{
-          if(data != null){
-            this.username = data.username;
+    private userService: UserService,
+    private authService: AuthService) {
+
+    this.userService.userSubject.subscribe({
+      next: (data: User | null) => {
+        if (data != null) {
+          this.username = data.firstName ? data.firstName : data.username;
+        }
+      }
+    });
+
+    this.tokenStorageService.tokenSubject.subscribe(x => {
+      this.isLoggedIn = !!this.tokenStorageService.getToken() || x!=null;
+
+      if (this.isLoggedIn) {
+
+        this.userService.setUserToAppLevel().subscribe({
+          next: (user) => {
+            this.userService.saveUserDetailsInStorage(JSON.parse(user));
+            this.userService.userSubject.next(user);
           }
-        }
-      });
-    }
-  
-  ngOnChanges(changes: SimpleChanges): void {
-    const userName = this.userService.getUsername();
-    if(userName != null){
-      this.userService.setUserToAppLevel().subscribe({
-        next : (data) =>{
-          const user : User = JSON.parse(data);
-
-          this.userService.userSubject.next(user);
-        }
-      })
-    }
+        })
+      }
+    });
   }
- 
-  ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
 
-    if (this.isLoggedIn) {
-      this.userService.setUserToAppLevel().subscribe({
-        next : (data) =>{
-          const user : User = JSON.parse(data);
-          this.userService.userSubject.next(user);
-        }
-      })
-    }
+  ngOnChanges(changes: SimpleChanges): void {
+    // const userName = this.userService.getUsername();
+    // if(userName != null){
+    //   this.userService.setUserToAppLevel().subscribe({
+    //     next : (data) =>{
+    //       const user : User = JSON.parse(data);
+
+    //       this.userService.userSubject.next(user);
+    //     }
+    //   })
+    // }
+  }
+
+  ngOnInit(): void {
+
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
   }
 
   logout(): void {

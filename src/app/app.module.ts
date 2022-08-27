@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { CommonModule } from '@angular/common';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { InventoryModule } from './inventory/inventory.module';
+import { TaskComponent } from './task/task.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { InventoryModule } from './inventory/inventory.module';
     ProfileComponent,
     HomeComponent,
     RegisterComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,

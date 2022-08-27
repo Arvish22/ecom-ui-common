@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { JwtResponse } from '../auth/models/jwt-response';
+import { User } from '../auth/models/user';
 import { AuthService } from '../auth/services/auth.service';
 import { TokenStorageService } from '../auth/services/token-storage.service';
 import { UserService } from '../auth/services/user.service';
@@ -46,11 +47,12 @@ export class LoginComponent implements OnInit {
     if (this.login.valid) {
       this.authService.login(val.username, val.password).subscribe({
         next: (data: JwtResponse) => {
-          this.tokenStorage.saveToken(data.token ? data.token : '');
           this.userService.saveUsername(val.username);
+          this.tokenStorage.saveToken(data.token ? data.token : '');
+          this.tokenStorage.tokenSubject.next(data.token);
           this.isLoginFailed = false;
           this.isLoggedIn = true;
-          this.reloadPage();
+          this.router.navigate(['/home']);
         },
         error: (err) => {
           this.errorMessage = err.error.message;

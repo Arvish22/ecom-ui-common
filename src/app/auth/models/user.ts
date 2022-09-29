@@ -8,6 +8,6 @@ export interface User {
     firstName : string | null,
     lastName: string | null,
     phone: string | null,
-    roles: Role[] | null, 
+    roles: Role[],
     resetPasswordToken: | null
 }

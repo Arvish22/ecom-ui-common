@@ -2,16 +2,18 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { User } from '../models/user';
 import { TokenStorageService } from '../services/token-storage.service';
+import { UserService } from '../services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
     constructor(
         private router: Router,
-        private tokenStorageService: TokenStorageService
+        private tokenStorageService: TokenStorageService,
+        private userService : UserService
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const user : User = this.tokenStorageService.getUser();
+        const user : User | null = this.userService.getUser();
         if (user) {
             // check if route is restricted by role
         for(var role of user.roles?user.roles : []){

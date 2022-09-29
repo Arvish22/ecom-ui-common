@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Category } from 'src/app/shared/models/category';
 import { CategoryService } from 'src/app/shared/service/category.service';
 
@@ -8,20 +8,22 @@ import { CategoryService } from 'src/app/shared/service/category.service';
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
+  isEdit: boolean = false;
 
   constructor(private categoryService : CategoryService) { }
 
+  @Output() isOpened = new EventEmitter<string>();
+
   category : Category = {
     name : '',
-    id : null,
-    categories : []
+    id : null
   }
 
-  subCategory : Category = {
-    name : '',
-    id : null,
-    categories : []
-  }
+  // subCategory : Category = {
+  //   name : '',
+  //   id : null,
+  //   categories : []
+  // }
 
   categories : Category[]  = [];
 
@@ -36,14 +38,7 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  public save(){
-    this.categoryService.save(this.category).subscribe({
-      next : data => {
-          this.categories.push(data);
-          this.categoryService.categorSubject.next(this.categories);
-      }
-    });
-  }
+ 
 
   public findAll(){
     this.categoryService.findAll().subscribe({
@@ -54,9 +49,35 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  public add(){
-    const category : Category = JSON.parse(JSON.stringify(this.subCategory));
-    this.subCategory.name = '';
-    this.category.categories.push(category);
+  cancel(){
+    this.isOpened.emit('cancel');
   }
+
+  // public add(){
+  //   const category : Category = JSON.parse(JSON.stringify(this.subCategory));
+  //   this.subCategory.name = '';
+  //   this.category.categories.push(category);
+  // }
+
+  addCategory(){
+    this.isEdit = true;
+  }
+
+  doEdit(val : string){
+    if(val == 'cancel'){
+      this.isEdit = false;
+      alert("closed without save");
+    }
+    if(val == 'save'){
+      this.isEdit = false;
+      alert("save");
+    }
+    if(val == 'error'){
+      this.isEdit = false;
+      alert("error");
+    }
+    if(val == 'addItem'){
+      this.isEdit = true;
+    }
+}
 }

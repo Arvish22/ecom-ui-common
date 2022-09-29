@@ -12,6 +12,7 @@ export class TokenStorageService {
   constructor() { }
   
   signOut(): void {
+    console.log("************88");
     window.localStorage.clear();
   }
   public saveToken(token: string): void {

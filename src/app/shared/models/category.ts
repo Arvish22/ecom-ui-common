@@ -1,5 +1,4 @@
 export interface Category {
     id: string | null,
-    name : string,
-    categories : Category[]
+    name : string
 }

@@ -1,0 +1,49 @@
+<div class="Container">
+    <div class="row mt-2">
+        <div class="col-6-lg d-flex justify-content-start">
+          <span><h5><a [ngClass]="selectedTab == 'Order'?'text-danger':'text-black'" (click)="switchTab('Order')"><u>Orders</u></a></h5></span>
+        </div>
+      </div>
+</div>
+
+<div class="row mt-1">
+    <div class="col-lg-6" style="display: inline-flex;">
+      <span><input id="name" style="width: 190%;" type="text"  class="form-control border border-dark "></span>
+      <span style="margin-left: 33% !important;"><a class="btn btn-md btn-warning">search</a></span>
+      
+    </div>
+    <div class="col-lg-6 mt-2">
+      <span><a class="btn btn-sm btn-danger" (click)="createOrder()">Create Order</a></span>
+    </div>
+  </div>
+  
+       
+        <div style="margin-top: 2%;" class="border-top">
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">hh</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>

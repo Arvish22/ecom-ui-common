@@ -1,1 +1,17 @@
-<p>inventory works!</p>
+<div class="Container">
+    <div class="row mt-2">
+        <div class="col-6-lg d-flex justify-content-start">
+          <span><h5><a [ngClass]="selectedTab == 'Items'?'text-danger':'text-black'" (click)="switchTab('Items')"><u>Items</u></a>
+             / <a [ngClass]="selectedTab == 'Category'?'text-danger':'text-black'" (click)="switchTab('Category')"><u>Category</u></a>
+              / <a [ngClass]="selectedTab == 'Units'?'text-danger':'text-black'" (click)="switchTab('Units')"><u>Units</u></a></h5></span>
+        </div>
+      </div>
+      <div *ngIf="selectedTab == 'Items'">
+        <app-add-item (isOpened)="doItemEdit($event)" *ngIf="isItemEdit"></app-add-item>
+    <app-list-items (isOpened)="doItemEdit($event)" *ngIf="!isItemEdit"></app-list-items>
+      </div>
+    
+
+    <app-category *ngIf="selectedTab == 'Category'"></app-category>
+    <app-unit *ngIf="selectedTab == 'Units'"></app-unit>
+</div>

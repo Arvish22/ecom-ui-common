@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 
     if (this.tokenStorage.getToken() && this.tokenStorage.getToken() != '') {
       this.isLoggedIn = true;
-      this.router.navigate(['/home']);
+      this.router.navigate(['/inventory']);
       //this.roles = this.tokenStorage.getUser().roles;
     }
   }
@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
           this.tokenStorage.tokenSubject.next(data.token);
           this.isLoginFailed = false;
           this.isLoggedIn = true;
-          this.router.navigate(['/home']);
         },
         error: (err) => {
           this.errorMessage = err.error.message;

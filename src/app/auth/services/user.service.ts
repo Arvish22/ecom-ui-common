@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { User } from '../models/user';
 import { Role } from '../models/role';
-const API_URL = 'http://radiant-headland-28157.herokuapp.com/api/user/';
+const API_URL = 'https://radiant-headland-28157.herokuapp.com/api/user/';
 //const API_URL = 'http://localhost:8080/api/user/';// '/api/user/';
 
 const USERNAME = 'USERNAME';

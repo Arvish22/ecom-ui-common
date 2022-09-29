@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +13,12 @@ import { CommonModule } from '@angular/common';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { InventoryModule } from './inventory/inventory.module';
 import { TaskComponent } from './task/task.component';
+import { TaskMenuComponent } from './task/task-menu/task-menu.component';
+import { UiComponentModule } from './shared/ui-component/ui-component.module';
+import { OrderComponent } from './order/order.component';
+import { OrderModule } from './order/order.module';
+import * as CanvasJSAngularChart from '../assets/canvasjs.angular.component';
+var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
 @NgModule({
   declarations: [
@@ -23,7 +28,9 @@ import { TaskComponent } from './task/task.component';
     HomeComponent,
     RegisterComponent,
     ForgotPasswordComponent,
-    TaskComponent
+    TaskComponent,
+    TaskMenuComponent,
+    CanvasJSChart
   ],
   imports: [
     BrowserModule,
@@ -32,7 +39,9 @@ import { TaskComponent } from './task/task.component';
     CommonModule,
     AppRoutingModule,
     HttpClientModule,
-    InventoryModule
+    InventoryModule,
+    OrderModule,
+    UiComponentModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

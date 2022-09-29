@@ -1,0 +1,14 @@
+<div id="overlay" class="overlay">
+    <div class=""></div>
+    <div class="box-center border border-dark">
+      <div id="text" class="m-2 d-flex justify-content-center"><h4><u>Add Unit</u></h4></div>
+      <div>
+        <div class="form-outline mb-4 col-6 box-center" >
+          <label for="name">Unit Name</label>
+          <input id="name" type="text"  class="form-control border border-dark" [(ngModel)]="unit.name">
+          <button class="btn btn-warning m-5" (click)="save()">save</button>
+          <button class="btn btn-danger m-5" (click)="cancel()">cancel</button>
+      </div>
+      </div>
+    </div>
+  </div>

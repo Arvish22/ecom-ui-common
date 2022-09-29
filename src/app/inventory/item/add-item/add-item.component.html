@@ -1,0 +1,51 @@
+
+<form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)">
+    <div class="mb-4">
+      <h2>Add Item</h2>
+    </div>
+    <div class="row">
+    <div class="form-outline mb-4 col-lg-6">
+        <label for="item-name">Item Name</label>
+        <input id="item-name" type="text" formControlName="name" class="form-control" >
+    </div>
+    <div class="form-outline mb-4 col-lg-6">
+        <div style="margin-bottom: -3.5%;"><label  for="item-category">Category</label></div>
+        
+        <select id="item-category" formControlName="category" class="form-control d-inline w-50 m-0">
+            <option *ngFor="let category of categories" value="category.name">{{category.name}}</option>
+          </select>
+        <button class="btn btn-sm btn-warning d-inline m-4" (click)="openCategory()">Add Category</button>
+    </div>
+    <div class="form-outline mb-4 col-lg-6">
+        <label for="skuId">Sku Id</label>
+        <input id="skuId" type="text" formControlName="skuId" class="form-control" >
+    </div>
+    <div class="form-outline mb-4 col-lg-6">
+        <div style="margin-bottom: -3.5%;"><label  for="item-unit">Choose a Unit</label></div>
+        
+        <select id="item-unit" formControlName="unit" class="form-control d-inline w-50 m-0">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+          </select>
+        <button class="btn btn-sm btn-warning d-inline m-4" (click)="openUnit()">Add Unit</button>
+    </div>
+    <div class="form-outline mb-4 col-lg-6">
+        <label for="item-price">Price</label>
+        <input id="item-price" type="text" formControlName="price" class="form-control" type="number" step=".01" min="0">
+    </div>
+    <div class="form-outline mb-4 col-lg-6">
+        <label for="item-discount">Discount</label>
+        <input id="item-discount" type="text" formControlName="discount" class="form-control" type="number" step=".01" min="0">
+    </div>
+    <div class="form-outline mb-4 col-lg-6">
+        <label for="item-stock">Stocks</label>
+        <input id="item-stock" type="text" formControlName="stock" class="form-control" type="number" min="0">
+    </div>
+</div>
+    <button type="submit" class="btn btn-warning btn-block mb-4 m-2" (click)="save()">Save</button>
+    <button type="submit" class="btn btn-danger btn-block mb-4 m-2" (click)="cancel()">Cancel</button>
+  </form>
+    <app-add-unit *ngIf="isUnitOpen" (isOpened)="closePop($event)"></app-add-unit>
+    <app-category *ngIf="isCategoryOpen" (isOpened)="closePop($event)"></app-category>

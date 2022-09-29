@@ -3,11 +3,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Category } from '../models/category';
 
-const API_URL = '/api/category/';
+const API_URL = 'http://localhost:8080/api/category/';//'/api/category/';
 const USERNAME = 'USERNAME';
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  responseType: 'text'as 'json'
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable({

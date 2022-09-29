@@ -1,4 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from './auth/models/user';
 import { AuthService } from './auth/services/auth.service';
 import { TokenStorageService } from './auth/services/token-storage.service';
@@ -10,15 +11,20 @@ import { UserService } from './auth/services/user.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnChanges {
+
+  isCollapsed : boolean = true;
   title = 'ecom-ui-common';
   private roles: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
   username: string | null = '';
+  isSeller: boolean = false;
+  isAdmin: boolean = false;
   constructor(private tokenStorageService: TokenStorageService,
     private userService: UserService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private router: Router) {
 
     this.userService.userSubject.subscribe({
       next: (data: User | null) => {
@@ -28,15 +34,29 @@ export class AppComponent implements OnInit, OnChanges {
       }
     });
 
+    this.userService.isAdmin.subscribe({
+      next: (data: boolean) => {
+        this.isAdmin = data;
+      }
+    });
+
+    this.userService.isSeller.subscribe({
+      next: (data: boolean) => {
+        this.isSeller = data;
+      }
+    });
+
     this.tokenStorageService.tokenSubject.subscribe(x => {
       this.isLoggedIn = !!this.tokenStorageService.getToken() || x!=null;
-
+      console.log(this.isLoggedIn);
       if (this.isLoggedIn) {
 
         this.userService.setUserToAppLevel().subscribe({
           next: (user) => {
-            this.userService.saveUserDetailsInStorage(JSON.parse(user));
+            console.log(this.isLoggedIn,"fetch user", user);
+            this.userService.saveUserDetailsInStorage(user);
             this.userService.userSubject.next(user);
+            this.router.navigate(['/inventory']);
           }
         })
       }
@@ -61,8 +81,17 @@ export class AppComponent implements OnInit, OnChanges {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
   }
 
-  logout(): void {
+  logout(val : boolean): void {
+    console.log("logout : ",val);
+    if(val){
+    this.isLoggedIn = false
     this.tokenStorageService.signOut();
     window.location.reload();
+    }
+  }
+
+  doExpand(val : boolean){
+    this.isCollapsed = val;
+    console.log(val);
   }
 }

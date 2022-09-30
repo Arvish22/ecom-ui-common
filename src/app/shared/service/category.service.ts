@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Business } from '../models/business';
 import { Category } from '../models/category';
+import { BusinessService } from './business.service';
 
 const API_URL = 'http://localhost:8080/api/category/';//'/api/category/';
 const USERNAME = 'USERNAME';
@@ -15,7 +17,13 @@ const httpOptions = {
 export class CategoryService {
   public categorSubject = new BehaviorSubject<Category[] | null>(null);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private businessService : BusinessService) { 
+    this.businessService.businessSubject.subscribe((b : Business | null)=>{
+      if(b != null){
+        this.categorSubject.next(b.categories);
+      }
+    });
+  }
   
   save(category : Category): Observable<any> {
     return this.http.post<Category>(API_URL + 'save',category , httpOptions);

@@ -4,6 +4,8 @@ import { User } from './auth/models/user';
 import { AuthService } from './auth/services/auth.service';
 import { TokenStorageService } from './auth/services/token-storage.service';
 import { UserService } from './auth/services/user.service';
+import { Business } from './shared/models/business';
+import { BusinessService } from './shared/service/business.service';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +26,8 @@ export class AppComponent implements OnInit, OnChanges {
   constructor(private tokenStorageService: TokenStorageService,
     private userService: UserService,
     private authService: AuthService,
-    private router: Router) {
+    private router: Router,
+    private businessService : BusinessService) {
 
     this.userService.userSubject.subscribe({
       next: (data: User | null) => {
@@ -54,8 +57,10 @@ export class AppComponent implements OnInit, OnChanges {
         this.userService.setUserToAppLevel().subscribe({
           next: (user) => {
             console.log(this.isLoggedIn,"fetch user", user);
-            this.userService.saveUserDetailsInStorage(user);
+            this.userService.saveUserDetailsInStorage(user); 
             this.userService.userSubject.next(user);
+
+            this.businessService.setBusinessData(user.id);
             this.router.navigate(['/inventory']);
           }
         })

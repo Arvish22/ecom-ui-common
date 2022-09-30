@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { UnitService } from 'src/app/shared/service/unit.service';
 
 @Component({
   selector: 'app-add-unit',
@@ -9,26 +10,31 @@ export class AddUnitComponent implements OnInit {
 
   unit : any = { name : ''};
   @Output() isOpened = new EventEmitter<string>();
+  units: string[] = [];
 
-  constructor() { }
+  constructor(private unitService : UnitService) {
+    this.unitService.unitSubject.subscribe(u=>{
+      if(u!=null){
+        this.units = u;
+      }
+    })
+   }
 
   ngOnInit(): void {
   }
 
   public save(){
-    // this.categoryService.save(this.category).subscribe({
-    //   next : data => {
-    //       this.categories.push(data);
-    //       this.categoryService.categorSubject.next(this.categories);
-    //       this.isOpened.emit('save');
-    //   },
-    //   error : err =>{
-    //     this.isOpened.emit('error');
-    //   }
-    // });
-    this.isOpened.emit('error');
+    this.unitService.save(this.unit.name).subscribe({
+      next : (data : string) => {
+          this.units.push(data);
+          this.unitService.unitSubject.next(this.units);
+          this.isOpened.emit('save');
+      },
+      error : err =>{
+        this.isOpened.emit('error');
+      }
+    });
   }
-
   cancel(){
      this.isOpened.emit('cancel');
   }

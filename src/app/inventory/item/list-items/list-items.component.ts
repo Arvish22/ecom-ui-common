@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Item } from 'src/app/shared/models/item';
+import { ItemService } from 'src/app/shared/service/item.service';
 
 @Component({
   selector: 'app-list-items',
@@ -9,8 +11,13 @@ export class ListItemsComponent implements OnInit {
 
   @Output() isOpened = new EventEmitter<string>();
   tableHeaders = ["#","Name","Price","Stocks","Actions"];
+  items: Item[] | null = null;
 
-  constructor() { }
+  constructor(private itemService : ItemService) {
+    this.itemService.itemSubject.subscribe(i=>{
+      this.items = i;
+    });
+   }
 
   ngOnInit(): void {
   }
@@ -18,5 +25,8 @@ export class ListItemsComponent implements OnInit {
   addItem(){
     this.isOpened.emit('addItem');
   }
+  
+  delete(item : Item){}
 
+  editItem(item : Item){}
 }

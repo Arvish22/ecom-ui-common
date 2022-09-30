@@ -41,6 +41,12 @@ export class CollapseSideNavComponent implements OnInit {
  
 
   selectedMenu(menu : string){
+
+    if(!this.isCollapsed){
+      this.isCollapsed = !this.isCollapsed;
+      this.ifCollapsed.emit(this.isCollapsed);
+    }
+      
     this.selectedTab = menu;
     console.log(menu);
     let url = '/'+menu.toLowerCase();

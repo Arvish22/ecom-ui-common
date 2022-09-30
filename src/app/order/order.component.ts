@@ -10,6 +10,7 @@ export class OrderComponent implements OnInit {
   num : number[] =[];
   isItemEdit: boolean = false;
   selectedTab : string = "Items";
+  isEdit: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
@@ -20,6 +21,6 @@ export class OrderComponent implements OnInit {
   }
 
   createOrder(){
-    
+    this.isEdit = true;
   }
 }

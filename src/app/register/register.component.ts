@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Role } from '../auth/models/role';
 import { User } from '../auth/models/user';
 import { AuthService } from '../auth/services/auth.service';
+import { Business } from '../shared/models/business';
+import { BusinessService } from '../shared/service/business.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -15,16 +17,17 @@ export class RegisterComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,private businessService : BusinessService) { }
   ngOnInit(): void {
     this.register  = new FormGroup({
       username: new FormControl("",Validators.compose([Validators.email,Validators.required])),
       password: new FormControl("",Validators.compose([
         Validators.required,
         Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")])),
+        business: new FormControl("",Validators.compose([Validators.required])),
       phone : new FormControl("",Validators.compose([
         Validators.required,
-        Validators.pattern("(0|91)?[0-9][0-9]{9}")
+        Validators.pattern("(0|91)?[0-9][0-9]{9}"),
       ]))
     });
   }
@@ -38,6 +41,7 @@ export class RegisterComponent implements OnInit {
         console.log(v);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        this.businessService.save(new Business({name : user.business , users : [user.id]}));
       },
       error: (e) => {
         this.errorMessage = e.error.message;

@@ -9,5 +9,6 @@ export interface User {
     lastName: string | null,
     phone: string | null,
     roles: Role[],
-    resetPasswordToken: | null
+    resetPasswordToken: | null,
+    business: string | null
 }

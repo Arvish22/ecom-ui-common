@@ -4,6 +4,8 @@ import { Item } from 'src/app/shared/models/item';
 import { FormBuilder } from '@angular/forms';
 import { CategoryService } from 'src/app/shared/service/category.service';
 import { Category } from 'src/app/shared/models/category';
+import { UnitService } from 'src/app/shared/service/unit.service';
+import { ItemService } from 'src/app/shared/service/item.service';
 
 @Component({
   selector: 'app-add-item',
@@ -17,11 +19,22 @@ export class AddItemComponent implements OnInit {
   isUnitOpen : boolean = false;
   @Output() isOpened = new EventEmitter<string>();
   categories: Category[] = [];
+  units: string[] = [];
+  items: Item[] = [];
 
-  constructor(private fb: FormBuilder,private categoryService : CategoryService) { 
+  constructor(private fb: FormBuilder,
+    private categoryService : CategoryService,
+    private unitService : UnitService,
+    private itemService : ItemService) { 
+
     this.categoryService.categorSubject.subscribe((res : Category[] | null) =>{
       if(res != null)
         this.categories = res;
+    });
+
+    this.unitService.unitSubject.subscribe((res : string[] | null) =>{
+      if(res != null)
+        this.units = res;
     });
   }
 
@@ -38,12 +51,17 @@ export class AddItemComponent implements OnInit {
     });
   }
 
-  onSubmit(val : any){
-    console.log("  ",val);
-  }
-
-  save(){
-    this.isOpened.emit('save');
+  public save(val : Item){
+    this.itemService.save(val).subscribe({
+      next : (data : Item) => {
+          this.items.push(data);
+          this.itemService.itemSubject.next(this.items);
+          this.isOpened.emit('save');
+      },
+      error : err =>{
+        this.isOpened.emit('error');
+      }
+    });
   }
 
   cancel(){

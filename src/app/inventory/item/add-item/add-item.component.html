@@ -1,5 +1,5 @@
 
-<form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)">
+<form [formGroup]="itemForm" (ngSubmit)="save(itemForm.value)">
     <div class="mb-4">
       <h2>Add Item</h2>
     </div>
@@ -24,10 +24,7 @@
         <div style="margin-bottom: -3.5%;"><label  for="item-unit">Choose a Unit</label></div>
         
         <select id="item-unit" formControlName="unit" class="form-control d-inline w-50 m-0">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
+            <option *ngFor="let unit of units" value="unit">{{unit}}</option>
           </select>
         <button class="btn btn-sm btn-warning d-inline m-4" (click)="openUnit()">Add Unit</button>
     </div>
@@ -44,8 +41,8 @@
         <input id="item-stock" type="text" formControlName="stock" class="form-control" type="number" min="0">
     </div>
 </div>
-    <button type="submit" class="btn btn-warning btn-block mb-4 m-2" (click)="save()">Save</button>
-    <button type="submit" class="btn btn-danger btn-block mb-4 m-2" (click)="cancel()">Cancel</button>
+    <button type="submit" class="btn btn-warning btn-block mb-4 m-2">Save</button>
+    <button class="btn btn-danger btn-block mb-4 m-2" (click)="cancel()">Cancel</button>
   </form>
     <app-add-unit *ngIf="isUnitOpen" (isOpened)="closePop($event)"></app-add-unit>
-    <app-category *ngIf="isCategoryOpen" (isOpened)="closePop($event)"></app-category>
+    <app-add-category *ngIf="isCategoryOpen" (isOpened)="closePop($event)"></app-add-category>

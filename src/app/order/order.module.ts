@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderComponent } from './order.component';
+import { CreateOrderComponent } from './create-order/create-order.component';
 
 
 
 @NgModule({
   declarations: [
-    OrderComponent
+    OrderComponent,
+    CreateOrderComponent
   ],
   imports: [
     CommonModule

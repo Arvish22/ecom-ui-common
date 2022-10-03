@@ -49,6 +49,21 @@
   </div>
 
   <div class="form-outline mb-4">
+    <label class="form-label" for="business">Business Name</label>
+    <input type="text" 
+    id="business" 
+    class="form-control" 
+    formControlName="business" 
+    name="business"
+    required/>
+    <!-- <div *ngIf="business.invalid && (business.dirty || business.touched)">
+      <div class="text-danger" *ngIf="business.errors?.['required']">
+        Business Name is required.
+      </div>
+    </div> -->
+  </div>
+
+  <div class="form-outline mb-4">
     <label class="form-label" for="password">Password</label>
     <input type="password" 
     id="password" 

@@ -11,16 +11,21 @@ export class AddCategoryComponent implements OnInit {
   categories: Category[] = [];
   @Output() isOpened = new EventEmitter<string>();
 
-  constructor(private categoryService : CategoryService) { }
+  constructor(private categoryService : CategoryService) { 
+    this.categoryService.categorSubject.subscribe(x=>{
+      if(x!=null){
+        this.categories = x;
+      }
+    });
+  }
 
   category : Category = {
-    name : '',
-    id : null
+    name : ''
   }
 
   public save(){
     this.categoryService.save(this.category).subscribe({
-      next : data => {
+      next : (data : Category) => {
           this.categories.push(data);
           this.categoryService.categorSubject.next(this.categories);
           this.isOpened.emit('save');

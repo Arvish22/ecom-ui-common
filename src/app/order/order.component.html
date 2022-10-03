@@ -1,3 +1,4 @@
+<div *ngIf="!isEdit">
 <div class="Container">
     <div class="row mt-2">
         <div class="col-6-lg d-flex justify-content-start">
@@ -47,3 +48,5 @@
                 </tbody>
               </table>
             </div>
+        </div>
+            <app-create-order *ngIf="isEdit"></app-create-order>

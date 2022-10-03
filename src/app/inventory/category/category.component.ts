@@ -15,9 +15,10 @@ export class CategoryComponent implements OnInit {
   @Output() isOpened = new EventEmitter<string>();
 
   category : Category = {
-    name : '',
-    id : null
+    name : ''
   }
+
+  headers : string[] = ['#','Name','Actions'];
 
   // subCategory : Category = {
   //   name : '',
@@ -80,4 +81,8 @@ export class CategoryComponent implements OnInit {
       this.isEdit = true;
     }
 }
+
+delete(category : Category){}
+
+editItem(item : Category){}
 }
